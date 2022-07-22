@@ -17,7 +17,7 @@ export const list = async (req, res) => {
   const { limit, search, sortByPrice, sortByName, cateId, time } = req.query;
   if (limit) {
     try {
-      const products = await Product.find().limit(limit).exec();
+      const products = await Product.find().limit(limit).populate('category').exec();
       res.json(products);
     } catch (error) {
       res.status(400).json({
@@ -27,7 +27,7 @@ export const list = async (req, res) => {
   } else if (limit && time) {
     try {
       const products = await Product.find()
-        .limit(limit)
+        .limit(limit).populate('category')
         .sort({ createdAt: time })
         .exec();
       res.json(products);
@@ -38,7 +38,7 @@ export const list = async (req, res) => {
     }
   } else if (!limit && time) {
     try {
-      const products = await Product.find().sort({ createdAt: time }).exec();
+      const products = await Product.find().sort({ createdAt: time }).populate('category').exec();
       res.json(products);
     } catch (error) {
       res.status(400).json({
@@ -47,7 +47,7 @@ export const list = async (req, res) => {
     }
   } else if (cateId) {
     try {
-      const products = await Product.find({ category: cateId }).exec();
+      const products = await Product.find({ category: cateId }).populate('category').exec();
       res.json(products);
     } catch (error) {
       res.status(400).json({

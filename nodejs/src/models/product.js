@@ -20,21 +20,23 @@ const productSchema = mongoose.Schema({
         lowercase: true,
         unique: true
     },
-    quantity: {
-        type: Number,
-        required: true
-    },
     description: {
         type: String,
-        required: true
+        required: true,
+        default: ""
     },
-    image: {
-        type: String,
-        required: true
-    },
+    images: [],
     status: {
         type: Boolean,
         default: true
+    },
+    shortDesc: {
+        type: String,
+        default: ""
+    },
+    desc: {
+        type: String,
+        default: ""
     },
     category: {
         type: ObjectId,
