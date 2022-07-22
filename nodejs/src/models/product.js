@@ -25,7 +25,9 @@ const productSchema = mongoose.Schema({
         required: true,
         default: ""
     },
-    images: [],
+    image: {
+        type: String
+    },
     status: {
         type: Boolean,
         default: true

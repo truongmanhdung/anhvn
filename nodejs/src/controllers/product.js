@@ -5,9 +5,9 @@ export const create = async (req, res) => {
   try {
     req.body.slug = slugify(req.body.title);
     const product = await new Product(req.body).save();
-    res.json(product);
+    return res.json(product);
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       msg: "Error",
     });
   }
@@ -18,9 +18,9 @@ export const list = async (req, res) => {
   if (limit) {
     try {
       const products = await Product.find().limit(limit).populate('category').exec();
-      res.json(products);
+      return res.json(products);
     } catch (error) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Error",
       });
     }
@@ -30,27 +30,27 @@ export const list = async (req, res) => {
         .limit(limit).populate('category')
         .sort({ createdAt: time })
         .exec();
-      res.json(products);
+        return res.json(products);
     } catch (error) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Error",
       });
     }
   } else if (!limit && time) {
     try {
       const products = await Product.find().sort({ createdAt: time }).populate('category').exec();
-      res.json(products);
+      return res.json(products);
     } catch (error) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Error",
       });
     }
   } else if (cateId) {
     try {
       const products = await Product.find({ category: cateId }).populate('category').exec();
-      res.json(products);
+      return res.json(products);
     } catch (error) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Error",
       });
     }
@@ -60,7 +60,7 @@ export const list = async (req, res) => {
         .sort({ price: sortByPrice })
         .populate("category")
         .exec();
-      res.json(products);
+        return res.json(products);
     } catch (error) {
       res.status(400).json({
         message: "Error",
@@ -72,7 +72,7 @@ export const list = async (req, res) => {
         .sort({ title: sortByName })
         .populate("category")
         .exec();
-      res.json(products);
+        return  res.json(products);
     } catch (error) {
       res.status(400).json({
         message: "Error",
